@@ -10,4 +10,3 @@ gem 'colorize'
 gem 'require_all'
 gem 'pry'
 gem 'pry-byebug'
-
