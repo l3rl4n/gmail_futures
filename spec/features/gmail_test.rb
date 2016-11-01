@@ -4,15 +4,16 @@ feature 'I want to implement futures to test gmail validation' do
 
   scenario 'Login and get inbox count' do
 
-    email_address = ENV['email']
-    pass          = ENV['pass']
+    # email_address = ENV['email']
+    # pass          = ENV['pass']
 
-    gmail_inbox_count = Concurrent::Future.execute{ Gmail.connect!(email_address, pass).inbox.count }
+    future = Concurrent::Future.execute{ sleep 5 }
+    # future = Concurrent::Future.execute{ Gmail.connect!(email_address, pass).inbox.count }
 
-    1.upto(15) {|i| print "gmail_inbox_count.state = #{gmail_inbox_count.state}\n"; sleep 0.2}
+    1.upto(7) {|i| print "future.state = #{future.state}\n"; sleep 1}
 
-    raise "ERROR: Inbox was lower than expected" unless gmail_inbox_count.value > 1
-    print "     Im done with the inbox\n".yellow
+    raise "ERROR: Inbox was lower than expected" unless future.value > 1
+    print "     Im done with the inbox - count: #{future.value}\n".yellow
   end
 
   scenario 'Second it block with no wait' do
