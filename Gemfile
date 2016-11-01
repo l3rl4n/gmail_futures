@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'gmail'
-gem 'concurrent-ruby'
+gem 'concurrent-ruby', require: 'concurrent'
 
 gem 'rspec'
 gem 'capybara'

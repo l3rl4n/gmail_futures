@@ -3,10 +3,15 @@ require 'spec_helper'
 feature 'I want to implement futures to test gmail validation' do
 
   scenario 'Login and get inbox count' do
+
     email_address = ENV['email']
     pass          = ENV['pass']
-    gmail_inbox_count = Gmail.connect!(email_address, pass).inbox.count
-    raise "ERROR: Inbox was lower than expected" unless gmail_inbox_count > 1
+
+    gmail_inbox_count = Concurrent::Future.execute{ Gmail.connect!(email_address, pass).inbox.count }
+
+    1.upto(15) {|i| print "gmail_inbox_count.state = #{gmail_inbox_count.state}\n"; sleep 0.2}
+
+    raise "ERROR: Inbox was lower than expected" unless gmail_inbox_count.value > 1
     print "     Im done with the inbox\n".yellow
   end
 
